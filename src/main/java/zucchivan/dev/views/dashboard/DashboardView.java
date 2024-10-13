@@ -48,8 +48,7 @@ public class DashboardView extends Composite<VerticalLayout> {
         layoutRow.add(tabSheet);
     }
 
-    record SampleItem(String value, String label, Boolean disabled) {
-    }
+    record SampleItem(String value, String label, Boolean disabled) {}
 
     private void setMultiSelectListBoxSampleData(MultiSelectListBox multiSelectListBox) {
         List<SampleItem> sampleItems = new ArrayList<>();
