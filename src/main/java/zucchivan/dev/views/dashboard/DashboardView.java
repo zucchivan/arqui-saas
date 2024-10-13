@@ -3,7 +3,7 @@ package zucchivan.dev.views.dashboard;
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.listbox.MultiSelectListBox;
+import com.vaadin.flow.component.listbox.ListBox;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.tabs.TabSheet;
@@ -15,6 +15,7 @@ import com.vaadin.flow.theme.lumo.LumoUtility.Gap;
 import jakarta.annotation.security.PermitAll;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @PageTitle("Dashboard")
 @Route("")
@@ -22,11 +23,13 @@ import java.util.List;
 @PermitAll
 public class DashboardView extends Composite<VerticalLayout> {
 
+    private List<SampleItem>  sampleItems;
+
     public DashboardView() {
         HorizontalLayout layoutRow = new HorizontalLayout();
         VerticalLayout layoutColumn2 = new VerticalLayout();
         TextField textField = new TextField();
-        MultiSelectListBox textItems = new MultiSelectListBox();
+        ListBox textItems = new ListBox();
         TabSheet tabSheet = new TabSheet();
         getContent().setWidth("100%");
         getContent().getStyle().set("flex-grow", "1");
@@ -46,19 +49,27 @@ public class DashboardView extends Composite<VerticalLayout> {
         layoutColumn2.add(textField);
         layoutColumn2.add(textItems);
         layoutRow.add(tabSheet);
+
+        textField.addValueChangeListener(event -> {
+            String filter = event.getValue().toLowerCase();
+            List<SampleItem> filteredItems = sampleItems.stream()
+                    .filter(item -> item.label().toLowerCase().contains(filter))
+                    .collect(Collectors.toList());
+            textItems.setItems(filteredItems);
+        });
     }
 
     record SampleItem(String value, String label, Boolean disabled) {}
 
-    private void setMultiSelectListBoxSampleData(MultiSelectListBox multiSelectListBox) {
-        List<SampleItem> sampleItems = new ArrayList<>();
+    private void setMultiSelectListBoxSampleData(ListBox listBox) {
+        sampleItems = new ArrayList<>();
         sampleItems.add(new SampleItem("first", "First", null));
         sampleItems.add(new SampleItem("second", "Second", null));
         sampleItems.add(new SampleItem("third", "Third", Boolean.TRUE));
         sampleItems.add(new SampleItem("fourth", "Fourth", null));
-        multiSelectListBox.setItems(sampleItems);
-        multiSelectListBox.setItemLabelGenerator(item -> ((SampleItem) item).label());
-        multiSelectListBox.setItemEnabledProvider(item -> !Boolean.TRUE.equals(((SampleItem) item).disabled()));
+        listBox.setItems(sampleItems);
+        listBox.setItemLabelGenerator(item -> ((SampleItem) item).label());
+        listBox.setItemEnabledProvider(item -> !Boolean.TRUE.equals(((SampleItem) item).disabled()));
     }
 
     private void setTabSheetSampleData(TabSheet tabSheet) {
