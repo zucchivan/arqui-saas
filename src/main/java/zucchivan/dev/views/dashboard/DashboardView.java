@@ -27,24 +27,33 @@ public class DashboardView extends Composite<VerticalLayout> {
     private List<SampleItem>  sampleItems;
 
     public DashboardView() {
-        HorizontalLayout layoutRow = new HorizontalLayout();
-        VerticalLayout layoutColumn2 = new VerticalLayout();
-        TextField textField = new TextField();
-        ListBox textItems = new ListBox();
-        TabSheet tabSheet = new TabSheet();
+        var layoutRow = new HorizontalLayout();
+        var layoutColumn2 = new VerticalLayout();
+        var textField = new TextField();
+        var textItems = new ListBox<SampleItem>();
+        var tabSheet = new TabSheet();
+
         getContent().setWidth("100%");
         getContent().getStyle().set("flex-grow", "1");
+
         layoutRow.addClassName(Gap.MEDIUM);
         layoutRow.setWidth("100%");
         layoutRow.getStyle().set("flex-grow", "1");
+
         layoutColumn2.setWidth("200px");
         layoutColumn2.getStyle().set("flex-grow", "1");
+
         textField.setLabel("Text field");
         textField.setWidth("min-content");
+
         textItems.setWidth("min-content");
+
         setMultiSelectListBoxSampleData(textItems);
+
         tabSheet.setWidth("100%");
+
         setTabSheetSampleData(tabSheet);
+
         getContent().add(layoutRow);
         layoutRow.add(layoutColumn2);
         layoutColumn2.add(textField);
@@ -67,7 +76,7 @@ public class DashboardView extends Composite<VerticalLayout> {
         sampleItems = new ArrayList<>();
         sampleItems.add(new SampleItem("first", "First", null));
         sampleItems.add(new SampleItem("second", "Second", null));
-        sampleItems.add(new SampleItem("third", "Third", Boolean.TRUE));
+        sampleItems.add(new SampleItem("third", "Third", null));
         sampleItems.add(new SampleItem("fourth", "Fourth", null));
         listBox.setItems(sampleItems);
         listBox.setItemLabelGenerator(item -> ((SampleItem) item).label());
@@ -75,8 +84,8 @@ public class DashboardView extends Composite<VerticalLayout> {
     }
 
     private void setTabSheetSampleData(TabSheet tabSheet) {
-        tabSheet.add("Dashboard", new Div(new Text("This is the Dashboard tab content")));
-        tabSheet.add("Payment", new Div(new Text("This is the Payment tab content")));
-        tabSheet.add("Shipping", new Div(new Text("This is the Shipping tab content")));
+        tabSheet.add("Geral", new Div(new Text("Visão geral do projeto")));
+        tabSheet.add("Balanço", new Div(new Text("Custos, receitas e lucros")));
+        tabSheet.add("Notas", new Div(new Text("Notas e lembretes")));
     }
 }
