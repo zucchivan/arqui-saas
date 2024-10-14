@@ -14,6 +14,10 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.theme.lumo.LumoUtility.Gap;
 import jakarta.annotation.security.PermitAll;
+import zucchivan.dev.views.dashboard.tabs.BalanceTab;
+import zucchivan.dev.views.dashboard.tabs.GeneralTab;
+import zucchivan.dev.views.dashboard.tabs.NotesTab;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -72,20 +76,20 @@ public class DashboardView extends Composite<VerticalLayout> {
 
     record SampleItem(String value, String label, Boolean disabled) {}
 
-    private void setMultiSelectListBoxSampleData(ListBox listBox) {
+    private void setMultiSelectListBoxSampleData(ListBox<SampleItem> listBox) {
         sampleItems = new ArrayList<>();
         sampleItems.add(new SampleItem("first", "First", null));
         sampleItems.add(new SampleItem("second", "Second", null));
         sampleItems.add(new SampleItem("third", "Third", null));
         sampleItems.add(new SampleItem("fourth", "Fourth", null));
         listBox.setItems(sampleItems);
-        listBox.setItemLabelGenerator(item -> ((SampleItem) item).label());
-        listBox.setItemEnabledProvider(item -> !Boolean.TRUE.equals(((SampleItem) item).disabled()));
+        listBox.setItemLabelGenerator(SampleItem::label);
+        listBox.setItemEnabledProvider(item -> item != null && !Boolean.TRUE.equals(item.disabled()));
     }
 
     private void setTabSheetSampleData(TabSheet tabSheet) {
-        tabSheet.add("Geral", new Div(new Text("Visão geral do projeto")));
-        tabSheet.add("Balanço", new Div(new Text("Custos, receitas e lucros")));
-        tabSheet.add("Notas", new Div(new Text("Notas e lembretes")));
+        tabSheet.add("Geral", new GeneralTab());
+        tabSheet.add("Balanço", new BalanceTab());
+        tabSheet.add("Notas", new NotesTab());
     }
 }
