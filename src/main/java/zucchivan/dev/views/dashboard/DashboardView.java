@@ -1,8 +1,6 @@
 package zucchivan.dev.views.dashboard;
 
 import com.vaadin.flow.component.Composite;
-import com.vaadin.flow.component.Text;
-import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.listbox.ListBox;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
