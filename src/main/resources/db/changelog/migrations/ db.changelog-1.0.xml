@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="1" author="ivan">
+        <createTable tableName="user">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="profile" type="varchar(255)"/>
+        </createTable>
+
+        <createTable tableName="project">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="location" type="varchar(255)"/>
+            <column name="start_date" type="date"/>
+            <column name="end_date" type="date"/>
+            <column name="budget" type="decimal"/>
+        </createTable>
+
+        <createTable tableName="plant">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="version" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="text"/>
+            <column name="created_at" type="datetime"/>
+            <column name="updated_at" type="datetime"/>
+        </createTable>
+
+        <createTable tableName="room">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="plant_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="room"
+                                 baseColumnNames="plant_id"
+                                 constraintName="fk_room_plant"
+                                 referencedTableName="plant"
+                                 referencedColumnNames="id"/>
+
+        <createTable tableName="material">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="type" type="varchar(255)"/>
+            <column name="cost_per_unit" type="decimal"/>
+            <column name="quantity" type="int"/>
+            <column name="amount_paid" type="decimal"/>
+            <column name="supplier" type="varchar(255)"/>
+            <column name="metadata" type="json"/>
+            <column name="room_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="material"
+                                 baseColumnNames="room_id"
+                                 constraintName="fk_material_room"
+                                 referencedTableName="room"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+</databaseChangeLog>
