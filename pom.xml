@@ -109,6 +109,11 @@
             <version>${jooq.version}</version>
         </dependency>
         <dependency>
+            <groupId>org.jooq</groupId>
+            <artifactId>jooq-meta-extensions-liquibase</artifactId>
+            <version>${jooq.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
@@ -188,38 +193,6 @@
                     <useSystemClassLoader>false</useSystemClassLoader>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>org.jooq</groupId>
-                <artifactId>jooq-codegen-maven</artifactId>
-                <version>${jooq.version}</version>
-                <executions>
-                    <execution>
-                        <id>generate-sources</id>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                        <configuration>
-                            <jdbc>
-                                <driver>org.h2.Driver</driver>
-                                <url>jdbc:h2:mem:testdb</url>
-                                <user>user</user>
-                                <password>password</password>
-                            </jdbc>
-                            <generator>
-                                <database>
-                                    <name>org.jooq.meta.h2.H2Database</name>
-                                    <inputSchema>PUBLIC</inputSchema>
-                                </database>
-                                <target>
-                                    <packageName>com.example.jooq.generated</packageName>
-                                    <directory>target/generated-sources/jooq</directory>
-                                </target>
-                            </generator>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
         </plugins>
     </build>
 
@@ -252,6 +225,38 @@
                                     <goal>build-frontend</goal>
                                 </goals>
                                 <phase>compile</phase>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.jooq</groupId>
+                        <artifactId>jooq-codegen-maven</artifactId>
+                        <version>${jooq.version}</version>
+                        <executions>
+                            <execution>
+                                <id>generate-sources</id>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>generate</goal>
+                                </goals>
+                                <configuration>
+                                    <jdbc>
+                                        <driver>org.postgresql.Driver</driver>
+                                        <url>jdbc:postgresql://localhost:5432/arqui</url>
+                                        <user>user</user>
+                                        <password>password</password>
+                                    </jdbc>
+                                    <generator>
+                                        <database>
+                                            <name>org.jooq.meta.postgres.PostgresDatabase</name>
+                                            <inputSchema>public</inputSchema>
+                                        </database>
+                                        <target>
+                                            <packageName>dev.zucchivan.jooq.generated</packageName>
+                                            <directory>target/generated-sources/jooq</directory>
+                                        </target>
+                                    </generator>
+                                </configuration>
                             </execution>
                         </executions>
                     </plugin>
@@ -300,6 +305,46 @@
                             <trimStackTrace>false</trimStackTrace>
                             <enableAssertions>true</enableAssertions>
                         </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <id>local</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.jooq</groupId>
+                        <artifactId>jooq-codegen-maven</artifactId>
+                        <version>${jooq.version}</version>
+                        <executions>
+                            <execution>
+                                <id>generate-sources</id>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>generate</goal>
+                                </goals>
+                                <configuration>
+                                    <jdbc>
+                                        <driver>org.h2.Driver</driver>
+                                        <url>jdbc:h2:mem:testdb</url>
+                                        <user>user</user>
+                                        <password>password</password>
+                                    </jdbc>
+                                    <generator>
+                                        <database>
+                                            <name>org.jooq.meta.h2.H2Database</name>
+                                            <inputSchema>PUBLIC</inputSchema>
+                                        </database>
+                                        <target>
+                                            <packageName>dev.zucchivan.jooq.generated</packageName>
+                                            <directory>target/generated-sources/jooq</directory>
+                                        </target>
+                                    </generator>
+                                </configuration>
+                            </execution>
+                        </executions>
                     </plugin>
                 </plugins>
             </build>

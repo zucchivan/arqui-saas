@@ -1,6 +1,7 @@
 package zucchivan.dev.views.dashboard;
 
 import com.vaadin.flow.component.Composite;
+import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.listbox.ListBox;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -12,6 +13,7 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.theme.lumo.LumoUtility.Gap;
 import jakarta.annotation.security.PermitAll;
+import zucchivan.dev.service.UserService;
 import zucchivan.dev.views.dashboard.tabs.BalanceTab;
 import zucchivan.dev.views.dashboard.tabs.GeneralTab;
 import zucchivan.dev.views.dashboard.tabs.NotesTab;
@@ -27,13 +29,17 @@ import java.util.stream.Collectors;
 public class DashboardView extends Composite<VerticalLayout> {
 
     private List<SampleItem>  sampleItems;
+    private final UserService userService;
 
-    public DashboardView() {
+
+    public DashboardView(UserService userService) {
+        this.userService = userService;
         var layoutRow = new HorizontalLayout();
         var layoutColumn2 = new VerticalLayout();
         var textField = new TextField();
         var textItems = new ListBox<SampleItem>();
         var tabSheet = new TabSheet();
+        var userInfo = new Span();
 
         getContent().setWidth("100%");
         getContent().getStyle().set("flex-grow", "1");
@@ -55,6 +61,9 @@ public class DashboardView extends Composite<VerticalLayout> {
         tabSheet.setWidth("100%");
 
         setTabSheetSampleData(tabSheet);
+
+        String userInfoText = userService.fetchAllUsers().getFirst().getName();
+        userInfo.setText(userInfoText);
 
         getContent().add(layoutRow);
         layoutRow.add(layoutColumn2);
