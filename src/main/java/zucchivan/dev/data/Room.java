@@ -1,17 +1,16 @@
 package zucchivan.dev.data;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
-public class AppUser {
+public class Room {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private String profile;
+
+    @ManyToOne
+    private Plant plant;
 
     public Long getId() {
         return id;
@@ -29,11 +28,11 @@ public class AppUser {
         this.name = name;
     }
 
-    public String getProfile() {
-        return profile;
+    public Plant getPlant() {
+        return plant;
     }
 
-    public void setProfile(String profile) {
-        this.profile = profile;
+    public void setPlant(Plant plant) {
+        this.plant = plant;
     }
 }
