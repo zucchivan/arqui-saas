@@ -13,7 +13,7 @@ import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfigurat
  * and some desktop browsers.
  *
  */
-@SpringBootApplication(exclude = HibernateJpaAutoConfiguration.class)
+@SpringBootApplication
 @Theme(value = "arqui-saas")
 public class Application implements AppShellConfigurator {
 
