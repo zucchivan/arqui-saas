@@ -6,8 +6,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-import zucchivan.dev.data.*;
-import zucchivan.dev.data.repository.*;
+import zucchivan.dev.model.*;
+import zucchivan.dev.model.repository.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -29,7 +29,7 @@ public class DataInitializer {
             logger.info("Initializing data...");
 
             AppUser user = new AppUser();
-            user.setName("John Doe");
+            user.setName("Ivan Santos");
             user.setProfile("Admin");
             appUserRepository.save(user);
             logger.info("Saved AppUser: {}", user);

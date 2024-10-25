@@ -1,6 +1,6 @@
-package zucchivan.dev.data.repository;
+package zucchivan.dev.model.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import zucchivan.dev.data.Project;
+import zucchivan.dev.model.Project;
 
 public interface ProjectRepository extends JpaRepository<Project, Long> {}

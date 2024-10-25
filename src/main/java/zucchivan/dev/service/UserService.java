@@ -1,8 +1,8 @@
 package zucchivan.dev.service;
 
 import org.springframework.stereotype.Service;
-import zucchivan.dev.data.AppUser;
-import zucchivan.dev.data.repository.AppUserRepository;
+import zucchivan.dev.model.AppUser;
+import zucchivan.dev.model.repository.AppUserRepository;
 
 import java.util.List;
 
